@@ -9,6 +9,7 @@ import json
 
 all_clients = []
 
+
 async def send_message(message: str):
     for client in all_clients:
         try:
@@ -27,9 +28,9 @@ async def client_connected(client_socket, path):
                 json_vmix = await response.text()
                 vmix_info = json.loads(json_vmix)
                 if vmix_info['media']['muted']:
-                    json_answ = 'Звук в эфире!'
-                else:
                     json_answ = 'Можно разговаривать'
+                else:
+                    json_answ = 'Звук в эфире!'
                 await send_message(json_answ)
 
 
