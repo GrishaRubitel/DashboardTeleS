@@ -28,9 +28,9 @@ async def client_connected(client_socket, path):
                 json_vmix = await response.text()
                 vmix_info = json.loads(json_vmix)
                 if vmix_info['media']['muted']:
-                    json_answ = 'Можно разговаривать'
+                    json_answ = '1'
                 else:
-                    json_answ = 'Звук в эфире!'
+                    json_answ = '0'
                 await send_message(json_answ)
 
 
