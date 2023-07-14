@@ -7,7 +7,6 @@ import asyncio
 import json
 import socket
 
-
 all_clients = []
 
 
@@ -29,7 +28,10 @@ async def client_connected(client_socket, path):
             async with session.get("http://localhost:3000/api/rest/v1/inputs/1/") as response:
                 json_vmix = await response.text()
                 vmix_info = json.loads(json_vmix)
-                json_answ['air_info'] = vmix_info['media']['muted']
+                if vmix_info['media']['muted'] == True or vmix_info['media']['volume'] <= 1:
+                    json_answ['air_info'] = True
+                elif vmix_info['media']['muted'] == False or vmix_info['media']['volume'] <= 1:
+                    json_answ['air_info'] = False
                 await send_message(json.dumps(json_answ))
 
 
@@ -86,3 +88,4 @@ if __name__ == '__main__':
     event_loop = asyncio.get_event_loop()
     event_loop.run_until_complete(start_all(event_loop))
     event_loop.run_forever()
+
